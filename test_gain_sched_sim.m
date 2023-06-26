@@ -48,13 +48,16 @@ out = sim(sim_model, "StopTime", string(t(end)));
 % Smoothness of tank discharge flow
 % This is the mean-squared-difference in the control 
 % moves over the whole simultion
-MSD = mean(diff(out.u) .^ 2)
+MSD = mean(diff(out.u) .^ 2);
 
 % Tank level limit exceedances
 % This is the sum-of-squared exceedances of the upper and 
 % lower safe operating limits (10% and 90% tank levels)
-STLE = sum((max(out.y - 90, 0) + max(10 - out.y, 0)) .^ 2)
+STLE = sum((max(out.y - 90, 0) + max(10 - out.y, 0)) .^ 2);
 
 % Overall performance metric
-OP = MSD + STLE
+OP = MSD + STLE;
 
+assert(round(MSD, 6) == 0.003201)
+assert(STLE == 0)
+assert(round(OP, 6) == 0.003201)
